@@ -1,6 +1,6 @@
-import LogoText from "../UI/Logo/LogoText";
+import LogoText from "../../components/UI/Logo/LogoText";
 import SignUpForm from "./SignUpForm";
-import Footer from "../Footer/Footer";
+import Footer from "../../components/Footer/Footer";
 
 const SignUp = () => {
     return (
@@ -12,7 +12,7 @@ const SignUp = () => {
                 <div className="px-10 pb-2 font-sourceSans text-textGray text-base text-center font-semibold">
                     Sign up to see photos and videos from your friends.
                 </div>
-                {/* sign up form */}
+                {/* Sign up form */}
                 <SignUpForm />
             </div>
             <div className="border border-textGray w-96 h-16 mb-8 p-3 flex justify-center items-center">

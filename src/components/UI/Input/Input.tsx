@@ -6,18 +6,30 @@ const Input: React.FC<{
     id: string;
     placeholder?: string;
     defaultValue?: string;
+    className?: string;
     getInputValueHandler: Function;
-}> = ({ type, name, id, placeholder, defaultValue, getInputValueHandler }) => {
-    const [value, setValue] = useState(defaultValue);
+}> = ({
+    type,
+    name,
+    id,
+    placeholder,
+    defaultValue,
+    getInputValueHandler,
+    className,
+}) => {
+    const [value, setValue] = useState(defaultValue ?? "");
 
-    const inputHandler = useCallback((value: string) => {
-        setValue(value);
-        getInputValueHandler(value);
-    }, []);
+    const inputHandler = useCallback(
+        (value: string) => {
+            setValue(value);
+            getInputValueHandler(value);
+        },
+        [value]
+    );
 
     return (
         <input
-            className="w-64 p-2 border border-textGray rounded-sm focus:outline-none text-sm placeholder:text-sm"
+            className={className}
             type={type}
             name={name}
             id={id}

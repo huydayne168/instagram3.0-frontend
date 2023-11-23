@@ -1,8 +1,20 @@
 import React from "react";
 
-const Button: React.FC<{ content: string }> = ({ content }) => {
+const Button: React.FC<{
+    content: string;
+    className?: string;
+    onClick?: Function;
+    disable?: boolean;
+}> = ({ content, onClick, disable, className }) => {
     return (
-        <button className="w-64 py-2 px-3 rounded-lg font-semibold bg-blue text-white">
+        <button
+            onClick={(e) => {
+                e.preventDefault();
+                onClick && onClick();
+            }}
+            disabled={disable}
+            className={`${className} ${disable && "opacity-70"}`}
+        >
             {content}
         </button>
     );

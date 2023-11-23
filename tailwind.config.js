@@ -10,6 +10,7 @@ export default {
             textGray: "rgb(115, 115, 115)",
             blue: "#0095f6",
             white: "#fff",
+            errorText: "rgb(237, 73, 86)",
         },
     },
     plugins: [],
