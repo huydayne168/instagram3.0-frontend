@@ -4,21 +4,26 @@ import Button from "../../components/UI/Button/Button";
 import { signUp, validateSignUpData } from "../../services/signupService";
 import SignUpFormDesc from "./SignUpFormDesc";
 import { AxiosError } from "axios";
+import { loginWithFacebook } from "../../services/loginService";
+
+const inputClassName =
+    "w-64 p-2 border border-textGray rounded-sm focus:outline-none text-sm placeholder:text-sm";
+const buttonClassName =
+    "w-64 py-2 px-3 rounded-lg font-semibold bg-blue text-white";
 
 const SignUpForm = () => {
-    const inputClassName =
-        "w-64 p-2 border border-textGray rounded-sm focus:outline-none text-sm placeholder:text-sm";
-    const buttonClassName =
-        "w-64 py-2 px-3 rounded-lg font-semibold bg-blue text-white";
     // Sign up form data:
     const [email, setEmail] = useState<string>("");
     const [fullName, setFullName] = useState<string>("");
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+
+    // validation states:
     const [errorMess, setErrorMess] = useState<string>("");
     const [disableSignUpButton, setDisableSignUpButton] =
         useState<boolean>(true);
 
+    // Get inputs value functions:
     const getEmailHandler = useCallback((value: string) => {
         setEmail(value);
     }, []);
@@ -43,14 +48,7 @@ const SignUpForm = () => {
         return () => {};
     }, [email, fullName, username, password]);
 
-    // Handle log in with Facebook: (This feature will be done later);
-    const handleLoginWithFacebook = useCallback(() => {
-        alert(
-            "You now can't log in with Facebook, we will develope it later. Sorry!:vvv"
-        );
-    }, []);
-
-    // Handle sign up when click sign up button
+    // Handle Sign up when click sign up button
     const handleSignUp = useCallback(async () => {
         const formData = {
             email,
@@ -63,13 +61,9 @@ const SignUpForm = () => {
             setErrorMess(validationResult.error.issues[0].message);
         } else {
             const result = await signUp(formData);
-            console.log(
-                result instanceof AxiosError,
-                "======> sign up result here"
-            );
             // Check errors sent from server: (Check for duplicated emails or usernames)
             if (result instanceof AxiosError) {
-                if (result.response?.data.message === "email")
+                if (result.response?.data.message === "username")
                     setErrorMess("A user with that username already exists!");
                 else if (result.response?.data.message === "email")
                     setErrorMess("A user with that email already exists!");
@@ -80,7 +74,7 @@ const SignUpForm = () => {
     return (
         <form action="#" className="flex flex-col items-center gap-2">
             <Button
-                onClick={handleLoginWithFacebook}
+                onClick={loginWithFacebook}
                 content="Log in with Facebook"
                 className={buttonClassName}
             />
@@ -123,6 +117,7 @@ const SignUpForm = () => {
                 getInputValueHandler={getPasswordHandler}
                 className={inputClassName}
             />
+            {/* Sign up form description */}
             <SignUpFormDesc />
             <Button
                 onClick={handleSignUp}
@@ -131,7 +126,9 @@ const SignUpForm = () => {
                 className={buttonClassName}
             />
             {errorMess && (
-                <div className="mt-4 text-sm text-errorText">{errorMess}</div>
+                <div className="mt-4 px-4 text-sm text-errorText text-center">
+                    {errorMess}
+                </div>
             )}
         </form>
     );

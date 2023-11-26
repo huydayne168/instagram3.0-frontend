@@ -27,7 +27,7 @@ export const validateSignUpData = (data: SignupData) => {
 // Sign up call api Handler:
 export const signUp = async (data: SignupData) => {
     try {
-        const response = await http.post("/user/sign-up", data);
+        const response = await http.post("/auth/sign-up", data);
         return response;
     } catch (error) {
         console.log("error here");

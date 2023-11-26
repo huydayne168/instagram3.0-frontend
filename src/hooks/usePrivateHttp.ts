@@ -3,6 +3,7 @@ import useRefreshToken from "./useRefreshToken";
 import { useAppDispatch, useAppSelector } from "./useStore";
 import { privateHttp } from "../lib/axios/http";
 import { authActions } from "../lib/redux/authSlice";
+
 const usePrivateHttp = () => {
     const currentUser = useAppSelector((state) => state.authSlice);
     const dispatch = useAppDispatch();

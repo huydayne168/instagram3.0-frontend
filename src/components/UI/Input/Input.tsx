@@ -7,7 +7,7 @@ const Input: React.FC<{
     placeholder?: string;
     defaultValue?: string;
     className?: string;
-    getInputValueHandler: Function;
+    getInputValueHandler?: Function;
 }> = ({
     type,
     name,
@@ -22,7 +22,7 @@ const Input: React.FC<{
     const inputHandler = useCallback(
         (value: string) => {
             setValue(value);
-            getInputValueHandler(value);
+            getInputValueHandler && getInputValueHandler(value);
         },
         [value]
     );
