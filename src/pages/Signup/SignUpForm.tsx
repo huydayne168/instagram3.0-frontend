@@ -5,6 +5,8 @@ import { signUp, validateSignUpData } from "../../services/signupService";
 import SignUpFormDesc from "./SignUpFormDesc";
 import { AxiosError } from "axios";
 import { loginWithFacebook } from "../../services/loginService";
+import { useNavigate } from "react-router-dom";
+// import useRedirect from "../../hooks/useRedirect";
 
 const inputClassName =
     "w-64 p-2 border border-textGray rounded-sm focus:outline-none text-sm placeholder:text-sm";
@@ -12,6 +14,9 @@ const buttonClassName =
     "w-64 py-2 px-3 rounded-lg font-semibold bg-blue text-white";
 
 const SignUpForm = () => {
+    // const { gotoLoginPage } = useRedirect();
+    const navigate = useNavigate();
+
     // Sign up form data:
     const [email, setEmail] = useState<string>("");
     const [fullName, setFullName] = useState<string>("");
@@ -27,15 +32,12 @@ const SignUpForm = () => {
     const getEmailHandler = useCallback((value: string) => {
         setEmail(value);
     }, []);
-
     const getFullNameHandler = useCallback((value: string) => {
         setFullName(value);
     }, []);
-
     const getUsernameHandler = useCallback((value: string) => {
         setUsername(value);
     }, []);
-
     const getPasswordHandler = useCallback((value: string) => {
         setPassword(value);
     }, []);
@@ -50,17 +52,19 @@ const SignUpForm = () => {
 
     // Handle Sign up when click sign up button
     const handleSignUp = useCallback(async () => {
-        const formData = {
+        const signUpData = {
             email,
             full_name: fullName,
             username,
             password,
         };
-        const validationResult = validateSignUpData(formData);
+
+        // Validate the sign up data:
+        const validationResult = validateSignUpData(signUpData);
         if (!validationResult.success) {
             setErrorMess(validationResult.error.issues[0].message);
         } else {
-            const result = await signUp(formData);
+            const result = await signUp(signUpData);
             // Check errors sent from server: (Check for duplicated emails or usernames)
             if (result instanceof AxiosError) {
                 if (result.response?.data.message === "username")
@@ -69,6 +73,9 @@ const SignUpForm = () => {
                     setErrorMess("A user with that email already exists!");
             }
         }
+
+        // Navigate user to Login page:
+        navigate("/login");
     }, [email, fullName, username, password]);
 
     return (

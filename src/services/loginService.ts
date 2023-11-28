@@ -22,9 +22,11 @@ const validateLoginData = (data: LoginData) => {
     return result;
 };
 
+// Login:
 const login = async (data: LoginData) => {
     try {
         const response = await http.post("/auth/login", data);
+        console.log(response);
         return response;
     } catch (error) {
         return error;

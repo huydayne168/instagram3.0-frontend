@@ -1,8 +1,9 @@
 import LogoText from "../../components/UI/Logo/LogoText";
 import SignUpForm from "./SignUpForm";
 import Footer from "../../components/Footer/Footer";
-
+import useRedirect from "../../hooks/useRedirect";
 const SignUp = () => {
+    const { gotoLoginPage } = useRedirect();
     return (
         <div className="flex flex-col gap-8 pb-14 items-center justify-center">
             <div className="border border-textGray flex flex-col items-center w-96 mt-2 px-3 py-9">
@@ -17,9 +18,12 @@ const SignUp = () => {
             </div>
             <div className="border border-textGray w-96 h-16 mb-8 p-3 flex justify-center items-center">
                 Have an account?{"  "}
-                <a className="text-blue pl-1" href="#">
+                <span
+                    className="text-blue pl-1 cursor-pointer"
+                    onClick={gotoLoginPage}
+                >
                     Log in
-                </a>
+                </span>
             </div>
 
             <Footer />

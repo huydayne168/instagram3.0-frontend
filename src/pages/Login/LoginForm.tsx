@@ -1,7 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
-import { login, loginWithFacebook } from "../../services/loginService";
+import {
+    login,
+    loginWithFacebook,
+    validateLoginData,
+} from "../../services/loginService";
+import { AxiosError } from "axios";
 
 const inputClassName =
     "w-64 p-2 border border-textGray rounded-sm focus:outline-none text-sm placeholder:text-sm";
@@ -20,7 +25,6 @@ const LoginForm = () => {
     const getUsernameHandler = useCallback((value: string) => {
         setUsername(value);
     }, []);
-
     const getPasswordHandler = useCallback((value: string) => {
         setPassword(value);
     }, []);
@@ -29,6 +33,39 @@ const LoginForm = () => {
     useEffect(() => {
         if (username && password) {
             setDisableLoginButton(false);
+        } else {
+            setDisableLoginButton(true);
+        }
+    }, [username, password]);
+
+    // Handle click Login button:
+    const handleLogin = useCallback(async () => {
+        const loginData = {
+            username,
+            password,
+        };
+        const validationResult = validateLoginData(loginData);
+
+        // Validate Login data
+        if (!validationResult.success) {
+            setErrorMess(validationResult.error.issues[0].message);
+        } else {
+            const result = await login(loginData);
+            // Check the errors sent from server (wrong username or password)
+            if (
+                result instanceof AxiosError &&
+                result.response?.status === 401
+            ) {
+                if (result.response.data.message === "username") {
+                    setErrorMess(
+                        "Sorry, your username was incorrect. Please double-check your username."
+                    );
+                } else if (result.response.data.message === "password") {
+                    setErrorMess(
+                        "Sorry, your password was incorrect. Please double-check your password."
+                    );
+                }
+            }
         }
     }, [username, password]);
 
@@ -56,7 +93,7 @@ const LoginForm = () => {
                 className={buttonClassName}
                 content="Log in"
                 disable={disableLoginButton}
-                onClick={login}
+                onClick={handleLogin}
             />
 
             <div
@@ -72,6 +109,11 @@ const LoginForm = () => {
                 className={buttonClassName}
                 onClick={loginWithFacebook}
             />
+            {errorMess && (
+                <div className="mt-4 px-4 text-sm text-errorText text-center">
+                    {errorMess}
+                </div>
+            )}
 
             <div className="text-xs text-blue mt-3">Forgot password ?</div>
         </form>
