@@ -3,7 +3,7 @@ import React from "react";
 const Footer = () => {
     return (
         <div className="flex flex-col gap-6 items-center justify-center text-xs text-textGray">
-            <ul className="flex gap-6 transition">
+            <ul className="px-2 flex flex-wrap justify-center gap-6 transition">
                 <li className="cursor-pointer hover:underline">Meta</li>
                 <li className="cursor-pointer hover:underline">About</li>
                 <li className="cursor-pointer hover:underline">Blog</li>
@@ -23,7 +23,7 @@ const Footer = () => {
                 </li>
             </ul>
 
-            <ul className="flex gap-6">
+            <ul className="flex gap-6 flex-wrap justify-center">
                 <li>English</li>
                 <li>© 2023 INSTAGRAM FROM huydayne1608</li>
             </ul>
