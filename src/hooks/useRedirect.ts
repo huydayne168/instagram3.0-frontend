@@ -12,7 +12,11 @@ const useRedirect = () => {
         navigate("/sign-up");
     };
 
-    return { gotoLoginPage, gotoSignUpPage };
+    const gotoHomePage = () => {
+        navigate("/home");
+    };
+
+    return { gotoLoginPage, gotoSignUpPage, gotoHomePage };
 };
 
 export default useRedirect;

@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { http } from "../lib/axios/http";
+import { AxiosResponse, AxiosError } from "axios";
 
 // Log in with Facebook: (This feature will be done later);
 const loginWithFacebook = () => {
@@ -23,13 +24,34 @@ const validateLoginData = (data: LoginData) => {
 };
 
 // Login:
+export type LoginResponse = {
+    success: number;
+    data: any;
+};
+
 const login = async (data: LoginData) => {
     try {
         const response = await http.post("/auth/login", data);
         console.log(response);
-        return response;
+        return {
+            success: true,
+            data: response.data,
+        };
     } catch (error) {
-        return error;
+        console.log(error);
+        if (error instanceof AxiosError && error.response?.status === 401) {
+            if (error.response.data.message === "username") {
+                return {
+                    success: false,
+                    data: "Sorry, your username was incorrect. Please double-check your username.",
+                };
+            } else if (error.response.data.message === "password") {
+                return {
+                    success: false,
+                    data: "Sorry, your password was incorrect. Please double-check your password.",
+                };
+            }
+        }
     }
 };
 

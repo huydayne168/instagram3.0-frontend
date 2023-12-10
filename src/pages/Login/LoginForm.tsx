@@ -6,13 +6,17 @@ import {
     loginWithFacebook,
     validateLoginData,
 } from "../../services/loginService";
-import { AxiosError } from "axios";
+import { useAppDispatch } from "../../hooks/useStore";
+import { authActions } from "../../lib/redux/authSlice";
+import useRedirect from "../../hooks/useRedirect";
 
 const inputClassName =
     "w-64 p-2 border border-textGray rounded-sm focus:outline-none text-sm placeholder:text-sm";
 const buttonClassName =
     "w-64 py-2 px-3 rounded-lg font-semibold bg-blue text-white";
 const LoginForm = () => {
+    const dispatch = useAppDispatch();
+    const { gotoHomePage } = useRedirect();
     // Login form data:
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -52,19 +56,16 @@ const LoginForm = () => {
         } else {
             const result = await login(loginData);
             // Check the errors sent from server (wrong username or password)
-            if (
-                result instanceof AxiosError &&
-                result.response?.status === 401
-            ) {
-                if (result.response.data.message === "username") {
-                    setErrorMess(
-                        "Sorry, your username was incorrect. Please double-check your username."
-                    );
-                } else if (result.response.data.message === "password") {
-                    setErrorMess(
-                        "Sorry, your password was incorrect. Please double-check your password."
-                    );
-                }
+            if (result?.success) {
+                dispatch(
+                    authActions.loggedIn({
+                        userInfo: result.data.userInfo,
+                        accessToken: result.data.accessToken,
+                    })
+                );
+                gotoHomePage();
+            } else {
+                setErrorMess(result?.data);
             }
         }
     }, [username, password]);
@@ -82,7 +83,7 @@ const LoginForm = () => {
 
             <Input
                 className={inputClassName}
-                type="text"
+                type="password"
                 name="password"
                 id="password"
                 placeholder="Your password"

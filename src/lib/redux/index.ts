@@ -1,4 +1,5 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import sideBarSlice from "./sideBarSlice";
 import authSlice from "./authSlice";
 import {
     persistStore,
@@ -15,11 +16,12 @@ import storage from "redux-persist/lib/storage"; // defaults to localStorage for
 const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["authSlice"],
+    whitelist: ["authSlice", "sideBarSlice"],
 };
 
 const rootReducer = combineReducers({
     authSlice: authSlice.reducer,
+    sideBarSlice: sideBarSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
