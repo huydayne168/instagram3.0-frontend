@@ -4,16 +4,19 @@ import PhotoVideoInput from "./PhotoVideoInput";
 import PhotoVideoPreview from "./PhotoVideoPreview";
 import readFileAsDataURL from "../../utils/readImageFile";
 import StatusInput from "./StatusInput";
+import usePrivateHttp from "../../hooks/usePrivateHttp";
+import { createPost, validateCreatePostData } from "../../services/postService";
 
 export type VideoPhotoPreview = {
     url: string;
-    type: "video" | "image";
+    type: "VIDEO" | "PHOTO";
     name: string;
 };
 
 const CreatePostModal = () => {
+    const privateHttp = usePrivateHttp();
     const [filesList, setFilesList] = useState<File[]>([]);
-    const [videoPhotoList, setVideoPhotoList] = useState<VideoPhotoPreview[]>(
+    const [photoVideoList, setphotoVideoList] = useState<VideoPhotoPreview[]>(
         []
     );
     const [caption, setCaption] = useState<string>("");
@@ -25,33 +28,58 @@ const CreatePostModal = () => {
     }, []);
 
     useEffect(() => {
+        setphotoVideoList((pre) => []);
         filesList.forEach(async (file: File, index) => {
             const url = await readFileAsDataURL(file);
             if (typeof url === "string") {
-                setVideoPhotoList((pre) => {
+                setphotoVideoList((pre) => {
                     const newState = [...pre];
                     newState[index] = {
                         url,
                         type:
                             file.type.split("/")[0] === "image"
-                                ? "image"
-                                : "video",
+                                ? "PHOTO"
+                                : "VIDEO",
                         name: file.name,
                     };
-                    console.log(newState);
                     return newState;
                 });
             }
         });
     }, [filesList]);
 
+    const deleteVideoPhotoHandler = useCallback((index: number) => {
+        setFilesList((pre) => {
+            const newState = [...pre];
+            newState.splice(index, 1);
+            return newState;
+        });
+    }, []);
+
     const getCaptionHandler = useCallback((value: string) => {
         setCaption(value);
     }, []);
 
+    // click to post
+    const shareHandler = useCallback(async () => {
+        console.log(photoVideoList, caption);
+        const createPostData = {
+            photoVideoList,
+            caption,
+        };
+        const validationResult = validateCreatePostData(createPostData);
+
+        if (!validationResult.success) {
+            alert(validationResult.error.issues[0].message);
+        } else {
+            const result = await createPost(privateHttp, createPostData);
+            console.log(result);
+        }
+    }, [photoVideoList, caption]);
+
     return (
         <div className="min-w-828px w-828px h-3/4 flex flex-col relative z-20 bg-lightDark rounded-lg">
-            <Heading />
+            <Heading shareHandler={shareHandler} />
             <div className="h-90% w-full flex">
                 {filesList.length === 0 ? (
                     <PhotoVideoInput
@@ -59,8 +87,9 @@ const CreatePostModal = () => {
                     />
                 ) : (
                     <PhotoVideoPreview
-                        videoPhotoList={videoPhotoList}
+                        photoVideoList={photoVideoList}
                         getFilesListsHandler={getFilesListHandler}
+                        deleteVideoPhotoHandler={deleteVideoPhotoHandler}
                     />
                 )}
 

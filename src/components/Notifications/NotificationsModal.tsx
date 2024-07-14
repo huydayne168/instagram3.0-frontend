@@ -1,5 +1,5 @@
 import React from "react";
-import { useAppSelector } from "../../../hooks/useStore";
+import { useAppSelector } from "../../hooks/useStore";
 import NotificationsTag from "./NotificationsTag";
 
 const NotificationsModal = () => {

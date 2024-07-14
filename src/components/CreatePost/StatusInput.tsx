@@ -16,11 +16,8 @@ const StatusInput: React.FC<{ getCaptionHandler: Function }> = ({
     const [emojis, setEmojis] = useState<string[]>([]);
 
     const addEmoji = useCallback((e: any) => {
-        // console.log(e.native);
         setEmojis((pre) => [...pre, e.native]);
     }, []);
-
-    console.log(emojis);
 
     return (
         <div className="w-2/5 flex flex-col border-l-0.5 border-l-textGray">

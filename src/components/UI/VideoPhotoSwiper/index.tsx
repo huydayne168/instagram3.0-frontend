@@ -5,18 +5,26 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import SwiperPaginationNavigation from "../SwiperPaginationNavigation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { PhotoVideo } from "../../../models/PhotoVideo";
 
-export type VideoPhoto = {
-    id?: number;
-    url: string;
-    type: "image" | "video";
-    name?: string;
-    post_index?: number;
+const DeleteVideoPhotoBtn: React.FC<{ onClick: Function }> = ({ onClick }) => {
+    return (
+        <FontAwesomeIcon
+            icon={faCircleXmark}
+            className="absolute top-2 right-2"
+            onClick={() => {
+                onClick();
+            }}
+        />
+    );
 };
 
-const VideoPhotoSwiper: React.FC<{ videoPhotoList: VideoPhoto[] }> = ({
-    videoPhotoList,
-}) => {
+const VideoPhotoSwiper: React.FC<{
+    videoPhotoList: PhotoVideo[];
+    deleteVideoPhoto?: Function;
+}> = ({ videoPhotoList, deleteVideoPhoto }) => {
     return (
         <Swiper
             grabCursor={true}
@@ -29,36 +37,39 @@ const VideoPhotoSwiper: React.FC<{ videoPhotoList: VideoPhoto[] }> = ({
                 prevEl: ".swiper-button-prev",
                 nextEl: ".swiper-button-next",
             }}
+            wrapperClass="h-full"
         >
-            {videoPhotoList.map((item: VideoPhoto) => {
-                if (item.type === "image" && typeof item.url === "string") {
-                    return (
-                        <SwiperSlide key={item.name}>
+            {videoPhotoList.map((item: PhotoVideo, index) => {
+                return (
+                    <SwiperSlide
+                        key={item._id + index.toString()}
+                        className="h-auto max-h-[585px]"
+                    >
+                        {item.type === "PHOTO" &&
+                        typeof item.url === "string" ? (
                             <img
                                 src={item.url}
-                                alt={item.name}
+                                alt={item._id}
                                 className="w-full h-full object-cover"
                             />
-                        </SwiperSlide>
-                    );
-                } else if (
-                    item.type === "video" &&
-                    typeof item.url === "string"
-                ) {
-                    return (
-                        <SwiperSlide
-                            key={item.name}
-                            className="flex justify-center items-center"
-                        >
+                        ) : (
                             <video
                                 autoPlay
                                 className="object-cover w-full h-full"
                             >
                                 <source src={item.url} type="video/mp4" />
                             </video>
-                        </SwiperSlide>
-                    );
-                }
+                        )}
+
+                        {deleteVideoPhoto && (
+                            <DeleteVideoPhotoBtn
+                                onClick={() => {
+                                    deleteVideoPhoto(index);
+                                }}
+                            />
+                        )}
+                    </SwiperSlide>
+                );
             })}
             <SwiperPaginationNavigation />
         </Swiper>

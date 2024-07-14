@@ -16,7 +16,11 @@ const useRedirect = () => {
         navigate("/home");
     };
 
-    return { gotoLoginPage, gotoSignUpPage, gotoHomePage };
+    const gotoProfilePage = (username?: string) => {
+        navigate(`/profile/${username}`);
+    };
+
+    return { gotoLoginPage, gotoSignUpPage, gotoHomePage, gotoProfilePage };
 };
 
 export default useRedirect;

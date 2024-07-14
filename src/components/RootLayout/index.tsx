@@ -5,9 +5,7 @@ const RootLayout = () => {
     return (
         <div className="h-screen flex bg-dark">
             <SideBar />
-            <div>
-                <Outlet />
-            </div>
+            <Outlet />
         </div>
     );
 };

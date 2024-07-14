@@ -1,10 +1,10 @@
-import { http } from "../lib/axios/http";
+import http from "../lib/axios/http";
 import { z } from "zod";
 
 // Sign up validation:
 const signUpDataSchema = z.object({
     email: z.string().email({ message: "Your email is not valid!" }),
-    full_name: z.string().min(3, {
+    fullName: z.string().min(3, {
         message: "Your full name must be at least 3 characters long!",
     }),
     username: z.string().min(3, {
@@ -15,7 +15,6 @@ const signUpDataSchema = z.object({
             "Your password must includes letters, numbers and at least 8 characters long! ",
     }),
 });
-
 type SignupData = z.infer<typeof signUpDataSchema>;
 
 // Validate Sign up data:

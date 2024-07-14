@@ -27,6 +27,7 @@ const usePrivateHttp = () => {
                 if (error?.response?.status === 403 && !prevRequest?.sent) {
                     prevRequest.sent = true;
                     const newAccessToken = await refresh();
+                    console.log(newAccessToken);
                     prevRequest.headers[
                         "Authorization"
                     ] = `Bearer ${newAccessToken}`;
@@ -40,7 +41,7 @@ const usePrivateHttp = () => {
             privateHttp.interceptors.request.eject(requestIntercept);
             privateHttp.interceptors.response.eject(responseIntercept);
         };
-    }, [currentUser, refresh, dispatch]);
+    }, [currentUser, refresh]);
 
     return privateHttp;
 };

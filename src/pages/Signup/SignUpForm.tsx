@@ -54,7 +54,7 @@ const SignUpForm = () => {
     const handleSignUp = useCallback(async () => {
         const signUpData = {
             email,
-            full_name: fullName,
+            fullName,
             username,
             password,
         };

@@ -25,12 +25,16 @@ export default {
                 "60%": "60%",
                 "828px": "828px",
             },
+            maxWidth: {
+                "630px": "630px",
+            },
         },
         fontFamily: {
             sourceSans: ['"Source Sans 3"', "sans-serif"],
         },
         colors: {
             textGray: "rgb(115, 115, 115)",
+            textSecondGray: "rgb(168, 168, 168)",
             blue: "#0095f6",
             white: "#fff",
             errorText: "rgb(237, 73, 86)",

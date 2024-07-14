@@ -9,11 +9,13 @@ type SideBarState = {
         | "create"
         | "profile";
     openedModal: "search" | "notifications" | null;
+    creatingPost: boolean;
 };
 
 const initialState: SideBarState = {
     currentPage: "home",
     openedModal: null,
+    creatingPost: false,
 };
 
 const sideBarSlice = createSlice({
@@ -40,6 +42,10 @@ const sideBarSlice = createSlice({
                 default:
                     break;
             }
+        },
+
+        openCreatePost: (state, action) => {
+            state.creatingPost = action.payload;
         },
     },
 });

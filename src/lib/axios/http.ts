@@ -13,4 +13,5 @@ const privateHttp = axios.create({
     withCredentials: true, // use this so we can work with the header, cookies, ...
 });
 
-export { http, privateHttp };
+export default http;
+export { privateHttp };

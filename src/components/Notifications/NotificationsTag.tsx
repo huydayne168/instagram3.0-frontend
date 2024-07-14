@@ -1,5 +1,5 @@
 import React from "react";
-import Avatar from "../../UI/Avatar/Avatar";
+import Avatar from "../UI/Avatar/Avatar";
 
 const NotificationsTag = () => {
     return (

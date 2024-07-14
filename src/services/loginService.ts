@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { http } from "../lib/axios/http";
-import { AxiosResponse, AxiosError } from "axios";
+import http from "../lib/axios/http";
+import { AxiosError } from "axios";
 
-// Log in with Facebook: (This feature will be done later);
+// Log in with Facebook: (======== This feature will be done later ========);
 const loginWithFacebook = () => {
     alert(
         "You now can't log in with Facebook, we will develope it later. Sorry!:vvv"
@@ -24,14 +24,12 @@ const validateLoginData = (data: LoginData) => {
 };
 
 // Login:
-export type LoginResponse = {
-    success: number;
-    data: any;
-};
-
 const login = async (data: LoginData) => {
     try {
-        const response = await http.post("/auth/login", data);
+        const response = await http.post("/auth/login", data, {
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true,
+        });
         console.log(response);
         return {
             success: true,

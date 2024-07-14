@@ -1,6 +1,12 @@
+import { PhotoVideo } from "./PhotoVideo";
+import { User } from "./User";
+
 export type Post = {
-    id: string;
-    title: string;
-    date: Date;
-    user_id: string;
+    _id: string;
+    caption: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+    userId: User;
+    photoVideo: PhotoVideo[];
+    likesCount: number | 0;
 };

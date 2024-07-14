@@ -5,16 +5,20 @@ import { VideoPhotoPreview } from "./CreatePostModal";
 import VideoPhotoSwiper from "../UI/VideoPhotoSwiper";
 
 const PhotoVideoPreview: React.FC<{
-    videoPhotoList: VideoPhotoPreview[];
+    photoVideoList: VideoPhotoPreview[];
     getFilesListsHandler: Function;
-}> = ({ videoPhotoList, getFilesListsHandler }) => {
+    deleteVideoPhotoHandler: Function;
+}> = ({ photoVideoList, getFilesListsHandler, deleteVideoPhotoHandler }) => {
     const addMoreFile = useCallback((files: FileList) => {
         getFilesListsHandler(files);
     }, []);
 
     return (
         <div className="h-full w-3/5 my-auto relative ">
-            <VideoPhotoSwiper videoPhotoList={videoPhotoList} />
+            <VideoPhotoSwiper
+                videoPhotoList={photoVideoList}
+                deleteVideoPhoto={deleteVideoPhotoHandler}
+            />
             <AddMoreVideoPhotoInput addMoreFile={addMoreFile} />
         </div>
     );

@@ -1,14 +1,17 @@
 import SideBarLogo from "./SideBarLogo";
 import NavigationList from "./NavigationList";
 import { useAppSelector } from "../../hooks/useStore";
-import SearchModal from "./Search/SearchModal";
-import NotificationsModal from "./Notifications/NotificationsModal";
+import SearchModal from "../Search/SearchModal";
+import NotificationsModal from "../Notifications/NotificationsModal";
 import CreatePost from "../CreatePost";
 
 const SideBar = () => {
     const openedModal = useAppSelector(
         (state) => state.sideBarSlice
     ).openedModal;
+    const creatingPost = useAppSelector(
+        (state) => state.sideBarSlice
+    ).creatingPost;
 
     return (
         <>
@@ -22,7 +25,7 @@ const SideBar = () => {
             </div>
             <SearchModal />
             <NotificationsModal />
-            <CreatePost />
+            {creatingPost ? <CreatePost /> : null}
         </>
     );
 };

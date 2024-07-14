@@ -49,9 +49,17 @@ const NavigationList = () => {
         }
     }, []);
 
+    const openCreateModalHandler = useCallback(
+        (title: string) => {
+            console.log(title);
+            dispatch(sideBarActions.openCreatePost(true));
+        },
+        [dispatch]
+    );
+
     return (
         <div className="flex flex-col justify-between h-full text-white">
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col">
                 <NavigationItem
                     icon={<HomeIcon />}
                     title="Home"
@@ -85,7 +93,7 @@ const NavigationList = () => {
                 <NavigationItem
                     icon={<CreateIcon />}
                     title="Create"
-                    onClick={clickRedirect}
+                    onClick={openCreateModalHandler}
                 />
                 {userInfo && (
                     <NavigationItem

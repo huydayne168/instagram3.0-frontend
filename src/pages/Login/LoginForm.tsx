@@ -54,6 +54,7 @@ const LoginForm = () => {
         if (!validationResult.success) {
             setErrorMess(validationResult.error.issues[0].message);
         } else {
+            console.log(loginData);
             const result = await login(loginData);
             // Check the errors sent from server (wrong username or password)
             if (result?.success) {

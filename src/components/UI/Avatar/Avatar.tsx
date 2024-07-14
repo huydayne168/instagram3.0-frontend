@@ -2,7 +2,7 @@ import React from "react";
 import defaultAvatar from "../../../assets/default-avatar.png";
 
 const Avatar: React.FC<{
-    avatarUrl?: string;
+    avatarUrl?: string | null;
     username?: string;
     className: string;
 }> = ({ avatarUrl, username, className }) => {

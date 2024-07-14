@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from "react";
-import Input from "../../UI/Input/Input";
+import Input from "../UI/Input/Input";
 import SearchedResult from "./SearchedResult";
 import RecentSearch from "./RecentSearch";
-import { useAppSelector } from "../../../hooks/useStore";
+import { useAppSelector } from "../../hooks/useStore";
 
 const SearchModal = () => {
     const openedModal = useAppSelector(
