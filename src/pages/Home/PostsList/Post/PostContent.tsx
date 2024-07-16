@@ -20,24 +20,22 @@ const PostContent: React.FC<{
 
             {/* Post Actions */}
             <div className="flex items-center mt-[10px] pb-2 h-10">
-                <div className="flex items-center mr-3">
+                <div className="flex items-center mr-3 hover:opacity-70 cursor-pointer">
                     <LikeIcon />
                 </div>
-                <div className="flex items-center mr-3">
+                <div className="flex items-center mr-3 hover:opacity-70 cursor-pointer">
                     <CommentIcon />
                 </div>
-                <div className="flex items-center mr-3">
+                <div className="flex items-center mr-3 hover:opacity-70 cursor-pointer">
                     <SharePostIcon />
                 </div>
-                <div className="flex items-center ml-auto">
+                <div className="flex items-center ml-auto hover:opacity-70 cursor-pointer">
                     <SaveIcon />
                 </div>
             </div>
 
             {/* Post Like Count */}
-            <div className="font-semibold text-sm ">
-                {split1000(1000)} likes
-            </div>
+            <div className="font-semibold text-sm ">{split1000(10)} likes</div>
 
             {/* Post Caption */}
             <div className="text-sm">
@@ -45,6 +43,13 @@ const PostContent: React.FC<{
                     {username}
                 </span>
                 <span>{caption}</span>
+            </div>
+
+            {/* View Comments */}
+            <div>
+                <span className="text-sm text-textSecondGray cursor-pointer mt-[2px]">
+                    View all comments
+                </span>
             </div>
         </div>
     );

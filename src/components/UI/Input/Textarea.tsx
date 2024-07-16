@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 
 const Textarea: React.FC<{
     name: string;
@@ -16,11 +16,11 @@ const Textarea: React.FC<{
     className,
 }) => {
     const [value, setValue] = useState<string>("");
+    const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-    const textareaHandler = useCallback((value: string) => {
+    const textareaHandler = (value: string) => {
         setValue(value);
-        getTextareaValueHandler(value);
-    }, []);
+    };
 
     useEffect(() => {
         addedEmojis &&
@@ -28,8 +28,13 @@ const Textarea: React.FC<{
             setValue((pre) => pre + addedEmojis[addedEmojis.length - 1]);
     }, [addedEmojis]);
 
+    useEffect(() => {
+        getTextareaValueHandler(value);
+    }, [value]);
+
     return (
         <textarea
+            ref={textareaRef}
             value={value}
             onChange={(e) => {
                 textareaHandler(e.target.value);
@@ -40,6 +45,12 @@ const Textarea: React.FC<{
             cols={30}
             rows={10}
             className={className}
+            // onInput={() => {
+            //     const textarea = textareaRef.current;
+            //     if (textarea) {
+            //         textarea.style.height = "inherit"; // Đặt lại độ cao để tính toán đúng
+            //     }
+            // }}
         ></textarea>
     );
 };

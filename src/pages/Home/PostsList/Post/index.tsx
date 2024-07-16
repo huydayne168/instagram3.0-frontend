@@ -2,6 +2,7 @@ import React from "react";
 import { Post as PostModel } from "../../../../models/Post";
 import PostContent from "./PostContent";
 import PostHeader from "./PostHeader";
+import PostComment from "./PostComment";
 
 const Post: React.FC<{ keyId: string; postData: PostModel }> = ({
     keyId,
@@ -27,6 +28,7 @@ const Post: React.FC<{ keyId: string; postData: PostModel }> = ({
             />
 
             {/* Post Comment */}
+            <PostComment />
         </div>
     );
 };
