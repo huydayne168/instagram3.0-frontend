@@ -13,7 +13,7 @@ const useRedirect = () => {
     };
 
     const gotoHomePage = () => {
-        navigate("/home");
+        navigate("/");
     };
 
     const gotoProfilePage = (username?: string) => {

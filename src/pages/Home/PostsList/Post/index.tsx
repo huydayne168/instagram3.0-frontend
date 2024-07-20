@@ -4,15 +4,9 @@ import PostContent from "./PostContent";
 import PostHeader from "./PostHeader";
 import PostComment from "./PostComment";
 
-const Post: React.FC<{ keyId: string; postData: PostModel }> = ({
-    keyId,
-    postData,
-}) => {
+const Post: React.FC<{ postData: PostModel }> = ({ postData }) => {
     return (
-        <div
-            key={keyId}
-            className="pb-5 mb-5 w-[468.4px] border-b border-lightDark border-solid"
-        >
+        <div className="pb-5 mb-5 w-[468.4px] border-b border-lightDark border-solid">
             {/* Post Header */}
             <PostHeader
                 avatar={postData.userId.avatar}
@@ -21,9 +15,10 @@ const Post: React.FC<{ keyId: string; postData: PostModel }> = ({
             />
             {/* Post Content */}
             <PostContent
+                postId={postData._id}
                 photoVideoList={postData.photoVideo}
                 caption={postData.caption}
-                likesCount={postData.likesCount}
+                likes={postData.likes}
                 username={postData.userId.username}
             />
 

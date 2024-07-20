@@ -1,3 +1,3 @@
 export type ChatRoom = {
-    id: string;
+    _id: string;
 };

@@ -25,9 +25,10 @@ function PostsList() {
     return (
         <div className="text-white flex flex-col items-center max-w-[630px] mt-6">
             {/* Render Posts */}
-            {postsList.map((post, index) => {
-                return <Post keyId={post._id} postData={post} />;
-            })}
+            {postsList &&
+                postsList.map((post, index) => {
+                    return <Post key={post._id} postData={post} />;
+                })}
         </div>
     );
 }

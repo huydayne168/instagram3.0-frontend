@@ -4,7 +4,6 @@ import {
     getAllUsers,
     getSuggestedUsers as getSuggestedUsersList,
 } from "../../../services/userService";
-import { set } from "zod";
 import UserTagBar from "../../../components/UI/UserTagBar";
 import usePrivateHttp from "../../../hooks/usePrivateHttp";
 
@@ -52,6 +51,7 @@ const Suggested = () => {
                     suggestedUsers.map((user, index) => {
                         return (
                             <UserTagBar
+                                key={`suggested-${user._id}`}
                                 username={user.username}
                                 avatar={user.avatar}
                                 annotate="Suggested for you"

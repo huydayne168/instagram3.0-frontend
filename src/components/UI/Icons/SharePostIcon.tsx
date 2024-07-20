@@ -15,8 +15,8 @@ const SharePostIcon = () => {
             <line
                 fill="none"
                 stroke="currentColor"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 x1="22"
                 x2="9.218"
                 y1="3"
@@ -26,8 +26,8 @@ const SharePostIcon = () => {
                 fill="none"
                 points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334"
                 stroke="currentColor"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinejoin="round"
+                strokeWidth="2"
             ></polygon>
         </svg>
     );

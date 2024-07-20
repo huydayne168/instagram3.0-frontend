@@ -1,5 +1,8 @@
+import { Post } from "./Post";
+import { User } from "./User";
+
 export type Like = {
-    id: string;
-    user_id: string;
-    post_id: string;
+    _id: string;
+    userId: string;
+    postId: string;
 };

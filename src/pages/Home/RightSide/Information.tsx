@@ -45,6 +45,7 @@ const Information = () => {
                 {InformationList.map((item, index) => {
                     return (
                         <a
+                            key={item.name}
                             href={item.url}
                             className={`flex items-stretch gap-x-1 hover:underline ${
                                 index !== InformationList.length - 1 &&
