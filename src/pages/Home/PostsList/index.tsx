@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { getAllPosts } from "../../../services/postService";
 import http from "../../../lib/axios/http";
-import { Post as PostModel } from "../../../models/Post";
 import Post from "./Post";
+import { useAppDispatch, useAppSelector } from "../../../hooks/useStore";
+import { postsListActions } from "../../../lib/redux/postsListSlice";
 
 function PostsList() {
-    const [postsList, setPostsList] = useState<PostModel[]>([]);
+    const dispatch = useAppDispatch();
+    const postsList = useAppSelector((state) => state.postsListSlice);
+
     // Get Post Handler:
     const getPostsHandler = async () => {
         try {
             const res = await getAllPosts(http);
             console.log(res?.data.postsList);
-            setPostsList(res?.data.postsList);
+            dispatch(postsListActions.addPosts(res?.data.postsList));
         } catch (error) {
             console.log(error);
         }

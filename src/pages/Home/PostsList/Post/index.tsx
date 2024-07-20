@@ -23,7 +23,7 @@ const Post: React.FC<{ postData: PostModel }> = ({ postData }) => {
             />
 
             {/* Post Comment */}
-            <PostComment />
+            <PostComment postId={postData._id} />
         </div>
     );
 };

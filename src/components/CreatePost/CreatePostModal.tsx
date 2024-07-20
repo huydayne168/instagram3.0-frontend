@@ -6,6 +6,9 @@ import readFileAsDataURL from "../../utils/readImageFile";
 import StatusInput from "./StatusInput";
 import usePrivateHttp from "../../hooks/usePrivateHttp";
 import { createPost, validateCreatePostData } from "../../services/postService";
+import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
+import { postsListActions } from "../../lib/redux/postsListSlice";
+import { sideBarActions } from "../../lib/redux/sideBarSlice";
 
 export type VideoPhotoPreview = {
     url: string;
@@ -20,6 +23,8 @@ const CreatePostModal = () => {
         []
     );
     const [caption, setCaption] = useState<string>("");
+    const dispatch = useAppDispatch();
+    const currentUser = useAppSelector((state) => state.authSlice.userInfo);
 
     const getFilesListHandler = useCallback((files: FileList) => {
         setFilesList((pre) => {
@@ -73,6 +78,20 @@ const CreatePostModal = () => {
             alert(validationResult.error.issues[0].message);
         } else {
             const result = await createPost(privateHttp, createPostData);
+            const newPost = {
+                _id: result?.data.post._id,
+                caption: result?.data.post.caption,
+                userId: currentUser,
+                photoVideo: photoVideoList,
+                likes: [],
+                comments: [],
+                createAt: new Date(),
+            };
+
+            if (result) {
+                dispatch(postsListActions.addPost(newPost));
+                dispatch(sideBarActions.openCreatePost(false));
+            }
             console.log(result);
         }
     }, [photoVideoList, caption]);

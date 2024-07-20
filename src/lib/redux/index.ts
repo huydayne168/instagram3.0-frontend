@@ -12,16 +12,25 @@ import {
     REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
+import postsListSlice from "./postsListSlice";
 
 const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["authSlice", "sideBarSlice"],
+    whitelist: ["authSlice"],
+    blacklist: ["sideBarSlice", "postsListSlice"],
+};
+
+const sideBarPersistConfig = {
+    key: "sideBarSlice",
+    storage,
+    blacklist: ["creatingPost"],
 };
 
 const rootReducer = combineReducers({
     authSlice: authSlice.reducer,
-    sideBarSlice: sideBarSlice.reducer,
+    sideBarSlice: persistReducer(sideBarPersistConfig, sideBarSlice.reducer),
+    postsListSlice: postsListSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

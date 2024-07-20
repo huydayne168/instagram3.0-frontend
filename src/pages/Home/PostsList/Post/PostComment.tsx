@@ -3,15 +3,36 @@ import Textarea from "../../../../components/UI/Input/Textarea";
 import EmojiIcon from "../../../../components/UI/Icons/EmojiIcon";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
+import {
+    postComment,
+    validatePostCommentData,
+} from "../../../../services/commentService";
+import usePrivateHttp from "../../../../hooks/usePrivateHttp";
 
-const PostComment = () => {
+const PostComment: React.FC<{ postId: string }> = ({ postId }) => {
     const [comment, setComment] = useState<string>("");
     const [emojis, setEmojis] = useState<string[]>([]);
     const [isEmojiVisible, setIsEmojiVisible] = useState(false);
     const emojiPickerRef = useRef<HTMLDivElement | null>(null); // Ref cho div bao quanh Picker
+    const privateHttp = usePrivateHttp();
 
-    function postCommentHandler() {
-        console.log(comment);
+    async function postCommentHandler() {
+        try {
+            console.log(comment);
+            const postCommentData = {
+                postId,
+                content: comment,
+            };
+            const validateResult = validatePostCommentData(postCommentData);
+            if (!validateResult.success) {
+                console.log(validateResult.error, "error");
+            } else {
+                const result = await postComment(privateHttp, postCommentData);
+                console.log(result);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const addEmoji = useCallback((e: any) => {
