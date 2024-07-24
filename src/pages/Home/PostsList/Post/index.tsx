@@ -14,13 +14,7 @@ const Post: React.FC<{ postData: PostModel }> = ({ postData }) => {
                 time={postData.createdAt}
             />
             {/* Post Content */}
-            <PostContent
-                postId={postData._id}
-                photoVideoList={postData.photoVideo}
-                caption={postData.caption}
-                likes={postData.likes}
-                username={postData.userId.username}
-            />
+            <PostContent postData={postData} />
 
             {/* Post Comment */}
             <PostComment postId={postData._id} />

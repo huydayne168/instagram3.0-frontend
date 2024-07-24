@@ -5,7 +5,6 @@ import { AxiosError, AxiosInstance } from "axios";
 const photoVideoSchema = z.object({
     url: z.string().min(1),
     type: z.enum(["VIDEO", "PHOTO"]),
-    name: z.string().min(1),
 });
 const createPostSchema = z.object({
     photoVideoList: photoVideoSchema

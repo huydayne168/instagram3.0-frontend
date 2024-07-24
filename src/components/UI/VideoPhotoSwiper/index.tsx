@@ -43,14 +43,14 @@ const VideoPhotoSwiper: React.FC<{
                 return (
                     <SwiperSlide
                         key={item._id + index.toString()}
-                        className="h-auto max-h-[585px]"
+                        className="h-auto"
                     >
                         {item.type === "PHOTO" &&
                         typeof item.url === "string" ? (
                             <img
                                 src={item.url}
                                 alt={item._id}
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-contain"
                             />
                         ) : (
                             <video

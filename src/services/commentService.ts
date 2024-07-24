@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import { z } from "zod";
+import http from "../lib/axios/http";
 
 // Comment Validation
 const postCommentSchema = z.object({
@@ -21,6 +22,25 @@ export const postComment = async (
 ) => {
     try {
         const res = await privateHttp.post("/comment/create-comment", data);
+        return res.data;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log(error.response?.data || error.message);
+        } else {
+            console.log("An unexpected error occurred", error);
+        }
+    }
+};
+
+// get Comments:
+export const getComments = async (postId: string) => {
+    try {
+        const res = await http.get(`/comment/get-comments`, {
+            params: { postId },
+        });
+
+        return res.data;
+
         return res.data;
     } catch (error) {
         if (axios.isAxiosError(error)) {

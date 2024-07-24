@@ -9,6 +9,7 @@ import { createPost, validateCreatePostData } from "../../services/postService";
 import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
 import { postsListActions } from "../../lib/redux/postsListSlice";
 import { sideBarActions } from "../../lib/redux/sideBarSlice";
+import { PhotoVideo } from "../../models/PhotoVideo";
 
 export type VideoPhotoPreview = {
     url: string;
@@ -19,9 +20,7 @@ export type VideoPhotoPreview = {
 const CreatePostModal = () => {
     const privateHttp = usePrivateHttp();
     const [filesList, setFilesList] = useState<File[]>([]);
-    const [photoVideoList, setphotoVideoList] = useState<VideoPhotoPreview[]>(
-        []
-    );
+    const [photoVideoList, setphotoVideoList] = useState<PhotoVideo[]>([]);
     const [caption, setCaption] = useState<string>("");
     const dispatch = useAppDispatch();
     const currentUser = useAppSelector((state) => state.authSlice.userInfo);
@@ -45,7 +44,6 @@ const CreatePostModal = () => {
                             file.type.split("/")[0] === "image"
                                 ? "PHOTO"
                                 : "VIDEO",
-                        name: file.name,
                     };
                     return newState;
                 });

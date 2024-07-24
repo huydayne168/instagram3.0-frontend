@@ -6,6 +6,7 @@ const UserTagBar: React.FC<{
     avatar?: string | null;
     annotate?: string;
     className?: string;
+    avatarClassName?: string;
     annotateClassName?: string;
     ActionButton?: React.FC;
 }> = ({
@@ -13,6 +14,7 @@ const UserTagBar: React.FC<{
     avatar,
     annotate,
     className,
+    avatarClassName,
     annotateClassName,
     ActionButton,
 }) => {
@@ -20,7 +22,9 @@ const UserTagBar: React.FC<{
     return (
         <div className={`flex items-center ${className}`}>
             <Avatar
-                className="h-[44px] w-[44px]  mr-3"
+                className={`${
+                    avatarClassName ? avatarClassName : "h-[44px] w-[44px]"
+                } mr-3`}
                 username={username}
                 avatarUrl={avatar}
             />

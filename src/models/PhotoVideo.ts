@@ -1,7 +1,7 @@
 export type PhotoVideo = {
-    _id: string;
+    _id?: string;
     url: string;
-    postId: string;
-    postIndex: number;
+    postId?: string;
+    postIndex?: number;
     type: "VIDEO" | "PHOTO";
 };

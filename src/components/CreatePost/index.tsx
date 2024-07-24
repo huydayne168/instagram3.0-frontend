@@ -22,9 +22,9 @@ const CreatePost = () => {
                 onClick={closeCreatePostModal}
             ></div>
 
-            {/* This is the x btn */}
+            {/* This is the x close btn */}
             <div
-                className="absolute top-5 right-5 text-textGray cursor-pointer z-20"
+                className="absolute top-2 right-8 text-textGray cursor-pointer z-20"
                 onClick={closeCreatePostModal}
             >
                 <FontAwesomeIcon icon={faXmark} className="text-3xl" />

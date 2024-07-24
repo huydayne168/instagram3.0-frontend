@@ -1,6 +1,12 @@
+import { Like } from "./Like";
+import { Post } from "./Post";
+import { User } from "./User";
+
 export type Comment = {
     _id: string;
-    user_id: string;
-    post_id: string;
-    contents: string;
+    userId: User;
+    postId: Post;
+    content: string;
+    likes: Like[];
+    createdAt: Date;
 };
