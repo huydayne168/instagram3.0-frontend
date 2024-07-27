@@ -22,6 +22,16 @@ const Textarea: React.FC<{
         setValue(value);
     };
 
+    // Auto resize textarea:
+    useEffect(() => {
+        const textarea = textareaRef.current;
+        if (textarea) {
+            textarea.style.height = "18px";
+            const height = textarea.scrollHeight;
+            textarea.style.height = height + "px";
+        }
+    }, [value]);
+
     useEffect(() => {
         addedEmojis &&
             addedEmojis.length > 0 &&
@@ -44,7 +54,10 @@ const Textarea: React.FC<{
             placeholder={placeholder}
             cols={30}
             rows={10}
-            className={className}
+            className={
+                className +
+                "max-h-28 scrollbar-hide resize-none overscroll-contain"
+            }
             // onInput={() => {
             //     const textarea = textareaRef.current;
             //     if (textarea) {

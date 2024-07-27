@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useContext, useRef, useState } from "react";
 import EmojiIcon from "../../../UI/Icons/EmojiIcon";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
@@ -8,6 +8,7 @@ import {
     validatePostCommentData,
 } from "../../../../services/commentService";
 import usePrivateHttp from "../../../../hooks/usePrivateHttp";
+import { CommentListContext } from "..";
 
 const PostComment: React.FC<{ postId: string }> = ({ postId }) => {
     const [comment, setComment] = useState<string>("");
@@ -18,6 +19,8 @@ const PostComment: React.FC<{ postId: string }> = ({ postId }) => {
     const addEmoji = useCallback((e: any) => {
         setEmojis((pre) => [...pre, e.native]);
     }, []);
+
+    const commentsListContext = useContext(CommentListContext);
 
     async function postCommentHandler() {
         try {
@@ -31,6 +34,10 @@ const PostComment: React.FC<{ postId: string }> = ({ postId }) => {
                 console.log(validateResult.error, "error");
             } else {
                 const result = await postComment(privateHttp, postCommentData);
+                commentsListContext.commentListDispatch({
+                    type: "ADD_COMMENT",
+                    payload: result.comment,
+                });
                 console.log(result);
             }
         } catch (error) {

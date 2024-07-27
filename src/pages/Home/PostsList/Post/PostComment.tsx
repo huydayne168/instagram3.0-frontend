@@ -67,7 +67,7 @@ const PostComment: React.FC<{ postId: string }> = ({ postId }) => {
                     setComment(value);
                 }}
                 addedEmojis={emojis}
-                className="w-full leading-4 text-sm h-[18px] max-h-[80px] border-none bg-transparent focus:outline-none resize-none"
+                className="w-full leading-4 text-sm h-[18px] border-none bg-transparent focus:outline-none resize-none"
             />
 
             {comment.length > 0 && (

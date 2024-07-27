@@ -1,19 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Comment as CommentModel } from "../../../../models/Comment";
 import Avatar from "../../../UI/Avatar/Avatar";
 import { Post } from "../../../../models/Post";
 import Comment from "./Comment";
 import { getComments } from "../../../../services/commentService";
+import { CommentListContext } from "..";
 
 const CommentsList: React.FC<{
     postData: Post;
 }> = ({ postData }) => {
-    const [commentsList, setCommentsList] = React.useState<CommentModel[]>([]);
+    const commentsListContext = useContext(CommentListContext);
+    const [commentsList, setCommentsList] = React.useState<CommentModel[]>(
+        commentsListContext?.commentListState.commentsList
+    );
     // Get Comments List:
     const getCommentsListHandler = async () => {
         try {
             const result = await getComments(postData._id);
-            setCommentsList(result.comments);
+            commentsListContext.commentListDispatch({
+                type: "SET_COMMENTS",
+                payload: result.comments,
+            });
         } catch (error) {
             console.log(error);
         }
@@ -21,7 +28,12 @@ const CommentsList: React.FC<{
 
     useEffect(() => {
         getCommentsListHandler();
-    }, []);
+    }, [postData._id]);
+
+    useEffect(() => {
+        setCommentsList(commentsListContext.commentListState.commentsList);
+    }, [commentsListContext.commentListState.commentsList]);
+    console.log(commentsList);
 
     return (
         <div className="h-full w-full absolute p-4 border-l border-b border-lightDark overflow-auto scrollbar-hide">
@@ -41,9 +53,9 @@ const CommentsList: React.FC<{
             </div>
 
             {/* Comments */}
-            {commentsList.length > 0 ? (
+            {commentsList && commentsList.length > 0 ? (
                 commentsList.map((comment) => {
-                    return <Comment commentData={comment} />;
+                    return <Comment key={comment._id} commentData={comment} />;
                 })
             ) : (
                 <div></div>

@@ -6,38 +6,47 @@ import CommentsList from "./CommentsList";
 import PostActions from "./PostActions";
 
 const ADD_COMMENT = "ADD_COMMENT";
+const SET_COMMENTS = "SET_COMMENTS";
+const initialCommentListState: { commentsList: Comment[] } = {
+    commentsList: [],
+};
+
+interface CommentListContextType {
+    commentListState: typeof initialCommentListState;
+    commentListDispatch: React.Dispatch<any>;
+}
+
+export const CommentListContext = createContext<CommentListContextType>({
+    commentListState: initialCommentListState,
+    commentListDispatch: () => {},
+});
 
 const PostDescription: React.FC<{ postData: Post }> = ({ postData }) => {
-    const initialCommentListState: { commentsList: Comment[] } = {
-        commentsList: [],
-    };
-
-    interface CommentListContextType {
-        commentListState: typeof initialCommentListState;
-        commentListDispatch: React.Dispatch<any>;
-    }
-
-    const commentReducer = (state: any, action: any) => {
+    const commentReducer = (
+        state: typeof initialCommentListState,
+        action: any
+    ) => {
         switch (action.type) {
             case ADD_COMMENT:
                 return {
                     ...state,
-                    commentsList: [action.payload, ...state.commentList],
+                    commentsList: [action.payload, ...state.commentsList],
                 };
-
+            case SET_COMMENTS:
+                return {
+                    ...state,
+                    commentsList: action.payload,
+                };
             default:
                 return state;
         }
     };
 
-    const CommentListContext = createContext<CommentListContextType | null>(
-        null
-    );
-
     const [commentListState, commentListDispatch] = useReducer(
         commentReducer,
         initialCommentListState
     );
+
     return (
         <CommentListContext.Provider
             value={{ commentListState, commentListDispatch }}
