@@ -10,12 +10,14 @@ type SideBarState = {
         | "profile";
     openedModal: "search" | "notifications" | null;
     creatingPost: boolean;
+    moreModal: boolean;
 };
 
 const initialState: SideBarState = {
     currentPage: "home",
     openedModal: null,
     creatingPost: false,
+    moreModal: false,
 };
 
 const sideBarSlice = createSlice({
@@ -46,6 +48,10 @@ const sideBarSlice = createSlice({
 
         openCreatePost: (state, action) => {
             state.creatingPost = action.payload;
+        },
+
+        openMoreModal: (state, action) => {
+            state.moreModal = action.payload;
         },
     },
 });

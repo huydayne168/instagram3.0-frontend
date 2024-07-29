@@ -1,7 +1,7 @@
 import CreatePostModal from "./CreatePostModal";
-import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
+import { useAppDispatch, useAppSelector } from "../../../hooks/useStore";
 import { useCallback } from "react";
-import { sideBarActions } from "../../lib/redux/sideBarSlice";
+import { sideBarActions } from "../../../lib/redux/sideBarSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 

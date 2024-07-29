@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from "react";
-import AddPostIcon from "../UI/Icons/AddPostIcon";
-import Button from "../UI/Button/Button";
+import AddPostIcon from "../../UI/Icons/AddPostIcon";
+import Button from "../../UI/Button/Button";
 
 const PhotoVideoInput: React.FC<{ getFilesListsHandler: Function }> = ({
     getFilesListsHandler,

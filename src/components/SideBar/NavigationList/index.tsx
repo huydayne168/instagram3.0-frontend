@@ -1,21 +1,23 @@
 import React, { useCallback } from "react";
 import NavigationItem from "./NavigationItem";
-import HomeIcon from "../UI/Icons/HomeIcon";
-import SearchIcon from "../UI/Icons/SearchIcon";
-import ExploreIcon from "../UI/Icons/ExploreIcon";
-import ReelsIcon from "../UI/Icons/ReelsIcon";
-import MessageIcon from "../UI/Icons/MessageIcon";
-import NotificationIcon from "../UI/Icons/NotificationIcon";
-import CreateIcon from "../UI/Icons/CreateIcon";
-import SettingIcon from "../UI/Icons/SettingIcon";
-import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
-import { sideBarActions } from "../../lib/redux/sideBarSlice";
-import useRedirect from "../../hooks/useRedirect";
-import Avatar from "../UI/Avatar/Avatar";
+import HomeIcon from "../../UI/Icons/HomeIcon";
+import SearchIcon from "../../UI/Icons/SearchIcon";
+import ExploreIcon from "../../UI/Icons/ExploreIcon";
+import ReelsIcon from "../../UI/Icons/ReelsIcon";
+import MessageIcon from "../../UI/Icons/MessageIcon";
+import NotificationIcon from "../../UI/Icons/NotificationIcon";
+import CreateIcon from "../../UI/Icons/CreateIcon";
+import SettingIcon from "../../UI/Icons/SettingIcon";
+import { useAppDispatch, useAppSelector } from "../../../hooks/useStore";
+import { sideBarActions } from "../../../lib/redux/sideBarSlice";
+import useRedirect from "../../../hooks/useRedirect";
+import Avatar from "../../UI/Avatar/Avatar";
+import MoreModal from "../MoreModal";
 
 const NavigationList = () => {
     const authSlice = useAppSelector((state) => state.authSlice);
     const userInfo = authSlice.userInfo;
+    const sideBarSlice = useAppSelector((state) => state.sideBarSlice);
     const dispatch = useAppDispatch();
 
     const { gotoHomePage } = useRedirect();
@@ -57,9 +59,13 @@ const NavigationList = () => {
         [dispatch]
     );
 
+    const openMoreModalHandler = () => {
+        dispatch(sideBarActions.openMoreModal(!sideBarSlice.moreModal));
+    };
+
     return (
         <div className="flex flex-col justify-between h-full text-white">
-            <div className="flex flex-col">
+            <div className="flex flex-col h-full">
                 <NavigationItem
                     icon={<HomeIcon />}
                     title="Home"
@@ -108,9 +114,17 @@ const NavigationList = () => {
                         onClick={clickRedirect}
                     />
                 )}
+                <div className="relative flex-1 flex flex-col justify-end">
+                    <div className="relative">
+                        {sideBarSlice.moreModal && <MoreModal />}
+                        <NavigationItem
+                            icon={<SettingIcon />}
+                            title="More"
+                            onClick={openMoreModalHandler}
+                        />
+                    </div>
+                </div>
             </div>
-
-            <NavigationItem icon={<SettingIcon />} title="More" />
         </div>
     );
 };

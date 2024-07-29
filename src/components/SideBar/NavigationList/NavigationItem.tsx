@@ -1,5 +1,5 @@
 import React from "react";
-import { useAppSelector } from "../../hooks/useStore";
+import { useAppSelector } from "../../../hooks/useStore";
 
 const NavigationItem: React.FC<{
     icon: JSX.Element;
@@ -15,12 +15,12 @@ const NavigationItem: React.FC<{
                 currentPage === title.toLowerCase() ? "bg-lightDark" : null
             } ${
                 openedModal === title.toLowerCase() && "!border-white"
-            } group p-3 mt-0.5 flex items-center gap-4 hover:bg-lightDark cursor-pointer rounded-lg `}
+            } group p-3 mt-0.5 flex items-center gap-4 hover:bg-lightSecondDark cursor-pointer rounded-lg `}
             onClick={() => {
                 onClick && onClick(title);
             }}
         >
-            <div className="group-hover:scale-105 transition-all ease-in delay-100">
+            <div className="group-hover:scale-105 transition-all ease-in delay-50">
                 {icon}
             </div>
 

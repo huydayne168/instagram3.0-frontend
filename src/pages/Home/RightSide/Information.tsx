@@ -47,13 +47,13 @@ const Information = () => {
                         <a
                             key={item.name}
                             href={item.url}
-                            className={`flex items-stretch gap-x-1 hover:underline ${
+                            className={`flex items-stretch gap-x-1 ${
                                 index !== InformationList.length - 1 &&
                                 "after:content-['·']"
                             } 
                             after:text-textSecondGray after:flex after:items-center`}
                         >
-                            {item.name}
+                            <span className="hover:underline">{item.name}</span>
                         </a>
                     );
                 })}

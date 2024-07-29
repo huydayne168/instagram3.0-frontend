@@ -1,8 +1,8 @@
 import React, { useCallback } from "react";
 // import { VideoPhoto } from "./CreatePostModal";
 import AddMoreVideoPhotoInput from "./AddMoreVideoPhotoInput";
-import VideoPhotoSwiper from "../UI/VideoPhotoSwiper";
-import { PhotoVideo } from "../../models/PhotoVideo";
+import VideoPhotoSwiper from "../../UI/VideoPhotoSwiper";
+import { PhotoVideo } from "../../../models/PhotoVideo";
 
 const PhotoVideoPreview: React.FC<{
     photoVideoList: PhotoVideo[];

@@ -1,9 +1,9 @@
 import SideBarLogo from "./SideBarLogo";
 import NavigationList from "./NavigationList";
 import { useAppSelector } from "../../hooks/useStore";
-import SearchModal from "../Search/SearchModal";
-import NotificationsModal from "../Notifications/NotificationsModal";
-import CreatePost from "../CreatePost";
+import SearchModal from "./Search";
+import NotificationsModal from "./Notifications";
+import CreatePost from "./CreatePost";
 
 const SideBar = () => {
     const openedModal = useAppSelector(

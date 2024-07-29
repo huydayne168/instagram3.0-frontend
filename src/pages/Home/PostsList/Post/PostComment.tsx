@@ -18,7 +18,6 @@ const PostComment: React.FC<{ postId: string }> = ({ postId }) => {
 
     async function postCommentHandler() {
         try {
-            console.log(comment);
             const postCommentData = {
                 postId,
                 content: comment,

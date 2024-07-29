@@ -2,14 +2,17 @@ import { useCallback, useEffect, useState } from "react";
 import Heading from "./Heading";
 import PhotoVideoInput from "./PhotoVideoInput";
 import PhotoVideoPreview from "./PhotoVideoPreview";
-import readFileAsDataURL from "../../utils/readImageFile";
+import readFileAsDataURL from "../../../utils/readImageFile";
 import StatusInput from "./StatusInput";
-import usePrivateHttp from "../../hooks/usePrivateHttp";
-import { createPost, validateCreatePostData } from "../../services/postService";
-import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
-import { postsListActions } from "../../lib/redux/postsListSlice";
-import { sideBarActions } from "../../lib/redux/sideBarSlice";
-import { PhotoVideo } from "../../models/PhotoVideo";
+import usePrivateHttp from "../../../hooks/usePrivateHttp";
+import {
+    createPost,
+    validateCreatePostData,
+} from "../../../services/postService";
+import { useAppDispatch, useAppSelector } from "../../../hooks/useStore";
+import { postsListActions } from "../../../lib/redux/postsListSlice";
+import { sideBarActions } from "../../../lib/redux/sideBarSlice";
+import { PhotoVideo } from "../../../models/PhotoVideo";
 
 export type VideoPhotoPreview = {
     url: string;

@@ -7,6 +7,7 @@ const Textarea: React.FC<{
     getTextareaValueHandler: Function;
     addedEmojis?: string[];
     className: string;
+    clear?: boolean;
 }> = ({
     name,
     id,
@@ -14,6 +15,7 @@ const Textarea: React.FC<{
     addedEmojis,
     getTextareaValueHandler,
     className,
+    clear,
 }) => {
     const [value, setValue] = useState<string>("");
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -41,6 +43,15 @@ const Textarea: React.FC<{
     useEffect(() => {
         getTextareaValueHandler(value);
     }, [value]);
+
+    // Clear textarea when click submit:
+    useEffect(() => {
+        const textarea = textareaRef.current;
+        if (textarea) {
+            textarea.value = "";
+            setValue("");
+        }
+    }, [clear]);
 
     return (
         <textarea

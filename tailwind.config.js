@@ -42,6 +42,7 @@ export default {
             "#262626": "#262626",
             "#efeae0": "#efeae0",
             lightDark: "rgb(38, 38, 38)",
+            lightSecondDark: "rgb(51, 51, 51)",
             transparent: "transparent",
         },
         screens: {

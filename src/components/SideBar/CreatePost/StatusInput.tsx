@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
-import { useAppSelector } from "../../hooks/useStore";
-import Avatar from "../UI/Avatar/Avatar";
-import Textarea from "../UI/Input/Textarea";
+import { useAppSelector } from "../../../hooks/useStore";
+import Avatar from "../../UI/Avatar/Avatar";
+import Textarea from "../../UI/Input/Textarea";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

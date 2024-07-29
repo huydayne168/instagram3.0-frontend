@@ -1,4 +1,4 @@
-import Button from "../UI/Button/Button";
+import Button from "../../UI/Button/Button";
 
 const Heading: React.FC<{ shareHandler: Function }> = ({ shareHandler }) => {
     return (

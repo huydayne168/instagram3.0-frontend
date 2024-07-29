@@ -20,6 +20,8 @@ const PostComment: React.FC<{ postId: string }> = ({ postId }) => {
         setEmojis((pre) => [...pre, e.native]);
     }, []);
 
+    const [clear, setClear] = useState<boolean>(false);
+
     const commentsListContext = useContext(CommentListContext);
 
     async function postCommentHandler() {
@@ -39,6 +41,8 @@ const PostComment: React.FC<{ postId: string }> = ({ postId }) => {
                     payload: result.comment,
                 });
                 console.log(result);
+                setComment("");
+                setClear(!clear);
             }
         } catch (error) {
             console.log(error);
@@ -77,7 +81,9 @@ const PostComment: React.FC<{ postId: string }> = ({ postId }) => {
                     setComment(value);
                 }}
                 addedEmojis={emojis}
-                className="flex-1 leading-4 text-sm h-[18px] max-h-[80px] border-none bg-transparent focus:outline-none resize-none"
+                className="flex-1 leading-4 text-sm h-[18px] max-h-[80px] border-none bg-transparent 
+                focus:outline-none resize-none"
+                clear={clear}
             />
 
             <div
