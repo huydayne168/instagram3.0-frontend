@@ -1,36 +1,44 @@
 import React, { useEffect, useRef } from "react";
 import MoreItem from "./MoreItem";
-import { useAppDispatch } from "../../../hooks/useStore";
-import { sideBarActions } from "../../../lib/redux/sideBarSlice";
+import { useAppDispatch, useAppSelector } from "../../../hooks/useStore";
+import { logout, validateLogoutData } from "../../../services/logoutService";
+import usePrivateHttp from "../../../hooks/usePrivateHttp";
+import { authActions } from "../../../lib/redux/authSlice";
+import useRedirect from "../../../hooks/useRedirect";
 
 const MoreModal = () => {
     const dispatch = useAppDispatch();
-    const moreModalRef = useRef<HTMLDivElement>(null);
+    const authSlice = useAppSelector((state) => state.authSlice);
+    const privateHttp = usePrivateHttp();
+    const { gotoLoginPage } = useRedirect();
 
-    // Hàm kiểm tra click ngoài
-    // const handleClickOutside = (event: any) => {
-    //     if (
-    //         moreModalRef.current &&
-    //         !moreModalRef.current.contains(event.target)
-    //     ) {
-    //         dispatch(sideBarActions.openMoreModal(false));
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     document.addEventListener("mousedown", handleClickOutside);
-
-    //     return () => {
-    //         document.removeEventListener("mousedown", handleClickOutside);
-    //     };
-    // }, []);
+    // Logout handler:
+    const logoutHandler = async () => {
+        const username = authSlice.userInfo?.username;
+        if (username) {
+            try {
+                const validationResult = validateLogoutData({
+                    username,
+                });
+                if (!validationResult.success) {
+                    console.log(validationResult.error);
+                } else {
+                    const res = await logout(privateHttp, {
+                        username,
+                    });
+                    console.log(res);
+                    dispatch(authActions.loggedOut(null));
+                    gotoLoginPage();
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    };
 
     return (
-        <div
-            ref={moreModalRef}
-            className="w-[250px] bg-lightDark p-2 rounded-md flex flex-col absolute -top-[calc(100%+18px)]"
-        >
-            <MoreItem title="Log out" />
+        <div className="w-[250px] bg-lightDark p-2 rounded-md flex flex-col absolute -top-[calc(100%+18px)]">
+            <MoreItem title="Log out" onClick={logoutHandler} />
         </div>
     );
 };

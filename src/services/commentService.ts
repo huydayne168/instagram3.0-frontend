@@ -40,8 +40,6 @@ export const getComments = async (postId: string) => {
         });
 
         return res.data;
-
-        return res.data;
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log(error.response?.data || error.message);

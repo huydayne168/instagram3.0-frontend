@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef, useEffect } from "react";
 import NavigationItem from "./NavigationItem";
 import HomeIcon from "../../UI/Icons/HomeIcon";
 import SearchIcon from "../../UI/Icons/SearchIcon";
@@ -19,6 +19,7 @@ const NavigationList = () => {
     const userInfo = authSlice.userInfo;
     const sideBarSlice = useAppSelector((state) => state.sideBarSlice);
     const dispatch = useAppDispatch();
+    const moreModalRef = useRef<HTMLDivElement>(null);
 
     const { gotoHomePage } = useRedirect();
 
@@ -62,6 +63,25 @@ const NavigationList = () => {
     const openMoreModalHandler = () => {
         dispatch(sideBarActions.openMoreModal(!sideBarSlice.moreModal));
     };
+
+    //  Khi click vào ngoài thì đóng more modal:
+    // Hàm kiểm tra click ngoài
+    const handleClickOutside = (event: any) => {
+        if (
+            moreModalRef.current &&
+            !moreModalRef.current.contains(event.target)
+        ) {
+            dispatch(sideBarActions.openMoreModal(false));
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     return (
         <div className="flex flex-col justify-between h-full text-white">
@@ -114,7 +134,11 @@ const NavigationList = () => {
                         onClick={clickRedirect}
                     />
                 )}
-                <div className="relative flex-1 flex flex-col justify-end">
+
+                <div
+                    ref={moreModalRef}
+                    className="relative flex-1 flex flex-col justify-end"
+                >
                     <div className="relative">
                         {sideBarSlice.moreModal && <MoreModal />}
                         <NavigationItem
